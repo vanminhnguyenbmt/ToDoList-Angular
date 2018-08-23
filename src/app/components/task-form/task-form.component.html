@@ -1,3 +1,10 @@
-<p>
-  task-form works!
-</p>
+<form class="task-form" novalidate (submit)="onSubmit($event, title)">
+	<input 
+		autocomplete="off" 
+		class="task-form__input" 
+		name="title" 
+		placeholder="Enter your task?" 
+        required type="text"
+        #title
+    />
+</form>

@@ -1,3 +1,20 @@
-<p>
-  task-list works!
-</p>
+<ul class="task-filters">
+    <li>
+        <a>View All</a>
+    </li>
+    <li>
+        <a>In Progress</a>
+    </li>
+    <li>
+        <a>Completed</a>
+    </li>
+</ul>
+
+<div class="task-list">
+    <!-- Item -->
+    <app-task-item
+        *ngFor="let task of tasks"
+        [task]="task"
+    ></app-task-item>
+    <!-- End Item -->
+</div>
