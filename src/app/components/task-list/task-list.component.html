@@ -1,12 +1,12 @@
 <ul class="task-filters">
-    <li>
-        <a>View All</a>
+    <li [routerLink]="['/tasks']">
+        <a [class.active]="status === 0">View All</a>
     </li>
-    <li>
-        <a>In Progress</a>
+    <li [routerLink]="['/tasks', { completed: false }]">
+        <a [class.active]="status === -1">In Progress</a>
     </li>
-    <li>
-        <a>Completed</a>
+    <li [routerLink]="['/tasks', { completed: true }]">
+        <a [class.active]="status === 1">Completed</a>
     </li>
 </ul>
 
@@ -17,6 +17,7 @@
         [task]="task"
         (setStatus)="setStatus(task)"
         (delete)="onDelete(task.id)"
+        (update)="onUpdate(task)"
     ></app-task-item>
     <!-- End Item -->
 </div>

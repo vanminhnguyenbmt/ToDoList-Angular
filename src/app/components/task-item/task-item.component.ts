@@ -11,6 +11,9 @@ export class TaskItemComponent implements OnInit {
     @Input() task: Task;
     @Output() setStatus = new EventEmitter();
     @Output() delete = new EventEmitter();
+    @Output() update = new EventEmitter();
+
+    public isEditing = false;
 
     constructor() { }
 
@@ -23,5 +26,17 @@ export class TaskItemComponent implements OnInit {
 
     onDelete() {
         this.delete.emit();
+    }
+
+    onEditing() {
+        this.isEditing = true;
+    }
+
+    onStopEditing() {
+        this.isEditing = false;
+    }
+
+    onSave() {
+        this.update.emit();
     }
 }

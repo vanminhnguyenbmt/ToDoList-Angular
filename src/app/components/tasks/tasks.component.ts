@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.class';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-tasks',
@@ -12,15 +13,28 @@ export class TasksComponent implements OnInit {
 
     public tasks: Task[] = [];
     public subscription: Subscription;
+    public subscriptionParams: Subscription;
 
     constructor(
-        public taskService: TaskService
+        public taskService: TaskService,
+        public activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit() {
         this.subscription = this.taskService.getAll().subscribe((tasks: Task[]) => {
             this.tasks = tasks;
-            console.log(this.tasks);
+            this.subscriptionParams = this.activatedRoute.params.subscribe((data: Params) => {
+                const status = data.completed ? (data.completed === 'true' ? 1 : -1) : 0;
+                this.tasks = tasks.filter(dataTasks => {
+                    if (status === 1) {
+                        return dataTasks.completed === true;
+                    } else if (status === -1) {
+                        return dataTasks.completed === false;
+                    } else {
+                        return dataTasks;
+                    }
+                });
+            });
         });
     }
 
@@ -60,5 +74,11 @@ export class TasksComponent implements OnInit {
                 break;
             }
         }
+    }
+
+    onUpdate(task: Task) {
+        this.subscription = this.taskService.update(task).subscribe((data: Task) => {
+            this.updateData(data);
+        });
     }
 }
