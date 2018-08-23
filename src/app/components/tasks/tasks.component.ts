@@ -30,4 +30,35 @@ export class TasksComponent implements OnInit {
             this.tasks.push(data);
         });
     }
+
+    setStatus(task: Task) {
+        task.completed = !task.completed;
+        this.subscription = this.taskService.update(task).subscribe((data: Task) => {
+            this.updateData(data);
+        });
+    }
+
+    updateData(data: Task) {
+        for (let i = 0; i < this.tasks.length; i++) {
+            if (this.tasks[i].id === data.id) {
+                this.tasks[i] = data;
+                break;
+            }
+        }
+    }
+
+    onDelete(id: number) {
+        this.subscription = this.taskService.delete(id).subscribe((data: Task) => {
+            this.updateDataAfterDelete(id);
+        });
+    }
+
+    updateDataAfterDelete(id: number) {
+        for (let i = 0; i < this.tasks.length; i++) {
+            if (this.tasks[i].id === id) {
+                this.tasks.splice(i, 1);
+                break;
+            }
+        }
+    }
 }

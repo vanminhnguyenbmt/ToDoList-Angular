@@ -1,14 +1,16 @@
 <div class="g-row">
-	<div class="g-col">
+    <div class="g-col">
         <!-- Form Add -->
-        <app-task-form
-            (addTask)="addTask($event)"
-        ></app-task-form>
-		<!-- End Form Add -->
-	</div>
-	<div class="g-col">
+        <app-task-form (addTask)="addTask($event)"></app-task-form>
+        <!-- End Form Add -->
+    </div>
+    <div class="g-col">
         <!-- List -->
-        <app-task-list [tasks]="tasks"></app-task-list>
+        <app-task-list 
+            [tasks]="tasks"
+            (setStatusConnector)="setStatus($event)"
+            (delete)="onDelete($event)"
+        ></app-task-list>
         <!-- End List -->
-	</div>
+    </div>
 </div>
